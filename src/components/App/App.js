@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
-import {getOrders, postNewOrder} from '../../apiCalls';
+import {getOrders, postNewOrder, deleteOrder} from '../../apiCalls';
 import Orders from '../../components/Orders/Orders';
 import OrderForm from '../../components/OrderForm/OrderForm';
 
@@ -24,6 +24,11 @@ class App extends Component {
       .catch(err => console.error('Error posting:', err));
   }
 
+  deleteExisting = (id) => {
+    deleteOrder(id)
+    .then(data => console.log(data))
+  }
+
   render() {
     return (
       <main className="App">
@@ -32,7 +37,7 @@ class App extends Component {
           <OrderForm submitNewOrder={this.submitNewOrder}/>
         </header>
 
-        <Orders orders={this.state.orders}/>
+        <Orders orders={this.state.orders} deleteExisting={this.deleteExisting}/>
       </main>
     );
   }
