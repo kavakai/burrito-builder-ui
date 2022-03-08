@@ -6,17 +6,20 @@ class OrderForm extends Component {
     this.props = props;
     this.state = {
       name: '',
-      ingredients: []
+      ingredients: [],
+      message: ''
     };
   }
 
   handleNameChange = e => {
     e.preventDefault()
+    this.setState({message: ""})
     this.setState({ [e.target.name]: e.target.value })
   }
 
   handleIngredientChange = e => {
     e.preventDefault()
+    this.setState({message: ""})
     this.setState({ ingredients: [...this.state.ingredients, e.target.name] })
   }
   
@@ -27,10 +30,16 @@ class OrderForm extends Component {
       id: Date.now(),
       ...this.state
     }
-    if (!this.state.ingredients.length) {
-      return 
+    if (!this.state.name && this.state.ingredients.length) {
+      this.setState({message: "Add a name and ingredients to get started"})
+    } else if (!this.state.name) {
+      this.setState({message: "Please add a name to this order"})
+    } else if (!this.state.ingredients.length) {
+      this.setState({message: "Add some ingredients to your burrito"})
+    } else {
+      this.setState({message: ""})
+      this.props.submitNewOrder(newOrder)
     }
-    this.props.submitNewOrder(newOrder)
     this.clearInputs();
   }
 
@@ -60,7 +69,8 @@ class OrderForm extends Component {
 
         { ingredientButtons }
 
-        <p>Order: { this.state.ingredients.join(', ') || 'Nothing selected' }</p>
+        {!this.state.message ? <p>Order: {this.state.ingredients.join(', ') || 'Nothing selected'}</p> : 
+          <h2>{this.state.message}</h2>}
 
         <button onClick={e => this.handleSubmit(e)}>
           Submit Order
