@@ -26,7 +26,7 @@ class App extends Component {
 
   deleteExisting = (id) => {
     deleteOrder(id)
-    .then(data => console.log(data))
+    .then(data => this.setState({ orders: data }))
   }
 
   render() {
