@@ -19,8 +19,12 @@ class OrderForm extends Component {
 
   handleIngredientChange = e => {
     e.preventDefault()
-    this.setState({message: ""})
-    this.setState({ ingredients: [...this.state.ingredients, e.target.name] })
+    this.setState({ message: "" })
+    if (this.state.ingredients.includes(e.target.name)) {
+      this.setState({ message: "Ingedient is already added" })
+    } else {
+      this.setState({ ingredients: [...this.state.ingredients, e.target.name] })
+    }
   }
   
 
