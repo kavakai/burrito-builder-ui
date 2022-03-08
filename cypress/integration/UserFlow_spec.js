@@ -8,12 +8,14 @@ describe("Home page", () => {
     cy.visit("http://localhost:3000/")
   })
 
-  it("Should display a title and a new burrito form", () => {
+  it("Should display a title and a new burrito form, and any existing orders", () => {
     cy.get("h1")
       .contains("Burrito Builder")
       .get("form")
       .get("button")
       .should("have.length", 13)
+      .get("h3")
+      .should("have.length", 3)
   })
 
   it("Should allow me to add a new order", () => {
