@@ -1,5 +1,5 @@
 import { orders } from "./testData";
-import kai from "./samplePost"
+import { kai } from "./samplePost"
 
 describe("Home page", () => {
   
@@ -34,5 +34,22 @@ describe("Home page", () => {
       .get("button")
       .last()
       .click()
+      .get("h3")
+      .should("have.length", 4)
+  })
+
+  it("Should not let me order if I am missing a name or at least one ingredient", () => {
+    cy.get("button")
+      .last()
+      .click()
+      .get("h2")
+      .contains("Please add a name to this order")
+      .get("input")
+      .type("Kai")
+      .get("button")
+      .last()
+      .click()
+      .get("h2")
+      .contains("Add some ingredients to your burrito")
   })
 })
