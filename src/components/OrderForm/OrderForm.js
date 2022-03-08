@@ -22,6 +22,9 @@ class OrderForm extends Component {
     this.setState({ message: "" })
     if (this.state.ingredients.includes(e.target.name)) {
       this.setState({ message: "Ingedient is already added" })
+      setTimeout(() => {
+        this.setState({message: ""})
+      }, 1000)
     } else {
       this.setState({ ingredients: [...this.state.ingredients, e.target.name] })
     }
